@@ -14,7 +14,7 @@ if(isset($_SERVER['Requested_Method'] == 'POST')){
             header("Location: ../index.html?user=" . urlencode($username));
             exit();
         } 
-else {
+   else {
             header("Location: login-page.html?error=Invalid%20username%20or%20password");
             exit();
         }
