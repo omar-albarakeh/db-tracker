@@ -10,5 +10,13 @@ if(isset($_SERVER['Requested_Method'] == 'POST')){
     $results=$querry->get_result();
     $user=$results->fetch_assoc();
 
+    if ($user && password_verify($password, $user['password'])) {
+            header("Location: ../index.html?user=" . urlencode($username));
+            exit();
+        } 
+else {
+            header("Location: login-page.html?error=Invalid%20username%20or%20password");
+            exit();
+        }
 }
 ?>
