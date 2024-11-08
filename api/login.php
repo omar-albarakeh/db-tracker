@@ -1,17 +1,17 @@
 <?php
 include "../api/cdb.php";
-if(isset($_SERVER['Requested_Method'] == 'POST')){
-    $username=$_Post['user'];
-    $password=$Post['password'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['user'];
+    $password = $_POST['password'];
 
-    $query=$connection->prepare("SELECT * FROM users WHERE id WHERE username = ?");
-    $query->bind_parm("s",$username);
-    $query->excute();
-    $results=$querry->get_result();
+    $query = $connection->prepare("SELECT * FROM users WHERE username = ?");
+    $query->bind_param("s", $username);
+    $query->execute();
+    $results=$query->get_result();
     $user=$results->fetch_assoc();
 
     if ($user && password_verify($password, $user['password'])) {
-            header("Location: ../index.html?user=" . urlencode($username));
+            header("Location: ../html/index.html?user=" . urlencode($username));
             exit();
         } 
    else {
