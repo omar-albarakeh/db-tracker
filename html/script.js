@@ -97,3 +97,12 @@ function updateTransaction(event) {
         })
         .catch(error => console.error('Error updating transaction:', error));
 }
+
+function deleteTransaction(id) {
+    axios.post(apiUrl + 'delete.php', { id })
+        .then(response => {
+            alert(response.data.message || 'Transaction deleted');
+            getTransactions();
+        })
+        .catch(error => console.error('Error deleting transaction:', error));
+}
