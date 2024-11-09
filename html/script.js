@@ -50,3 +50,17 @@ function applyFilters() {
     .then(response => displayTransactions(response.data))
     .catch(error => console.error('Error applying filters:', error));
 }
+
+function displayTransactions(transactions) {
+    const list = document.getElementById('transactions-list');
+    list.innerHTML = '';
+    transactions.forEach(transaction => {
+        const item = document.createElement('div');
+        item.innerHTML = `
+            <p>${transaction.notes} - $${transaction.amount} (${transaction.type})</p>
+            <button onclick="editTransaction(${transaction.id})">Edit</button>
+            <button onclick="deleteTransaction(${transaction.id})">Delete</button>
+        `;
+        list.appendChild(item);
+    });
+}
