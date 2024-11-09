@@ -2,6 +2,7 @@ const apiUrl = '../api/';
 
 document.getElementById('transaction-form').addEventListener('submit', addTransaction);
 document.getElementById('fetch-transactions').addEventListener('click', getTransactions);
+document.getElementById('apply-filters').addEventListener('click', applyFilters);
 
 function addTransaction(event) {
     event.preventDefault();
@@ -21,7 +22,7 @@ function addTransaction(event) {
 }
 
 function getTransactions() {
-    const userId = 1; // Replace with dynamic user ID if available
+    const userId = 1;
 
     axios.get(apiUrl + 'read.php', {
         params: { userId }
@@ -31,4 +32,21 @@ function getTransactions() {
         displayTransactions(transactions);
     })
     .catch(error => console.error('Error fetching transactions:', error));
+}
+
+function applyFilters() {
+    const userId = 1;
+    const filters = {
+        minAmount: document.getElementById('min-amount').value,
+        maxAmount: document.getElementById('max-amount').value,
+        date: document.getElementById('filter-date').value,
+        type: document.getElementById('filter-type').value,
+        notes: document.getElementById('filter-notes').value,
+    };
+
+    axios.get(apiUrl + 'read.php', {
+        params: { userId, ...filters }
+    })
+    .then(response => displayTransactions(response.data))
+    .catch(error => console.error('Error applying filters:', error));
 }
