@@ -64,3 +64,16 @@ function displayTransactions(transactions) {
         list.appendChild(item);
     });
 }
+
+function editTransaction(id) {
+    axios.get(apiUrl + 'read_single.php', { params: { id } })
+        .then(response => {
+            const transaction = response.data;
+            document.getElementById('edit-id').value = transaction.id;
+            document.getElementById('edit-notes').value = transaction.notes;
+            document.getElementById('edit-amount').value = transaction.amount;
+            document.getElementById('edit-type').value = transaction.type;
+            document.getElementById('edit-transaction-form').style.display = 'block';
+        })
+        .catch(error => console.error('Error fetching transaction:', error));
+}
