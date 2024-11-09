@@ -1,6 +1,7 @@
 const apiUrl = '../api/';
 
 document.getElementById('transaction-form').addEventListener('submit', addTransaction);
+document.getElementById('fetch-transactions').addEventListener('click', getTransactions);
 
 function addTransaction(event) {
     event.preventDefault();
@@ -19,3 +20,15 @@ function addTransaction(event) {
         .catch(error => console.error('Error adding transaction:', error));
 }
 
+function getTransactions() {
+    const userId = 1; // Replace with dynamic user ID if available
+
+    axios.get(apiUrl + 'read.php', {
+        params: { userId }
+    })
+    .then(response => {
+        const transactions = response.data;
+        displayTransactions(transactions);
+    })
+    .catch(error => console.error('Error fetching transactions:', error));
+}
