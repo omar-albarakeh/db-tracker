@@ -3,6 +3,8 @@ const apiUrl = '../api/';
 document.getElementById('transaction-form').addEventListener('submit', addTransaction);
 document.getElementById('fetch-transactions').addEventListener('click', getTransactions);
 document.getElementById('apply-filters').addEventListener('click', applyFilters);
+document.getElementById('edit-transaction-form').addEventListener('submit', updateTransaction);
+
 
 function addTransaction(event) {
     event.preventDefault();
@@ -76,4 +78,22 @@ function editTransaction(id) {
             document.getElementById('edit-transaction-form').style.display = 'block';
         })
         .catch(error => console.error('Error fetching transaction:', error));
+}
+
+function updateTransaction(event) {
+    event.preventDefault();
+    const data = {
+        id: document.getElementById('edit-id').value,
+        notes: document.getElementById('edit-notes').value,
+        amount: parseFloat(document.getElementById('edit-amount').value),
+        type: document.getElementById('edit-type').value,
+    };
+
+    axios.post(apiUrl + 'update.php', data)
+        .then(response => {
+            alert(response.data.message || 'Transaction updated');
+            getTransactions();
+            document.getElementById('edit-transaction-form').style.display = 'none';
+        })
+        .catch(error => console.error('Error updating transaction:', error));
 }
